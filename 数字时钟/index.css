@@ -1,0 +1,39 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.container{
+    background: black;
+    margin: 0 auto;
+    text-align: center;
+}
+.column, .seperator{
+    display: inline-block;
+    color: #fff;
+    font-size: 90px;
+    vertical-align: top;
+    line-height: 1em;
+    /* opacity: 0.18; */
+}
+.column{
+    transition: transform .3s;
+}
+.seperator{
+    transform: translateY(calc(50vh - 45px));
+}
+.visible{
+    opacity: 1;
+    text-shadow: 3px 6px 10px #fff;
+}
+.close{
+    opacity: .70;
+}
+.far{
+    opacity: .4;
+}
+.far1{
+    opacity: .23
+}
+.morefar{
+    opacity: .16;
+}
