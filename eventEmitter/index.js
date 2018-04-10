@@ -1,6 +1,6 @@
 ;(function (){
     let root = (typeof self === 'object' && self.self === self && self) ||
-        (typeof global === 'object' && global.global === global && global);
+        (typeof global === 'object' && global.global === global && global);// service worker中没有window 使用self
     
     class EventEmitter{
 
