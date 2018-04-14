@@ -1,4 +1,7 @@
 function PPromise(fn){
+    if(!new.target){
+        throw new TypeError('error');
+    }
     this.successCallbacks = [];
     this.value = null;
     this.status = 'PENDING';
@@ -8,8 +11,9 @@ function PPromise(fn){
         setTimeout(function(){
             self.status = 'FULFILLED';
             self.successCallbacks.forEach(f => {
-                self.value = f(v);
+                v = f(v);
             });
+            self.value = v;
         }, 0);
     }
 
@@ -20,5 +24,7 @@ function PPromise(fn){
 
     fn(resolve);
 }
+
+window.PPromise = PPromise;
 
 //https://www.cnblogs.com/huansky/p/6064402.html
