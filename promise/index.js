@@ -20,3 +20,5 @@ function PPromise(fn){
 
     fn(resolve);
 }
+
+//https://www.cnblogs.com/huansky/p/6064402.html
