@@ -19,12 +19,24 @@ function PPromise(fn){
     }
 
     this.then = function(fullFunc){
-        if(this.status == 'PENDING'){
-            this.successCallbacks.push(fullFunc);
-        }else if(this.status == 'FULLFILLED'){
-            fullFunc(this.value);
-        }
-        return this;
+        let self = this;
+        return new PPromise(function(resolve){
+            function handle(v){
+                v = fullFunc(v);
+                if(typeof v == 'object'){
+                    v.then(function(v1){
+                        resolve(v1);
+                    });
+                }else{
+                    resolve(v);
+                }
+            }
+            if(self.status == 'PENDING'){
+                self.successCallbacks.push(handle);
+            }else if(self.status == 'FULLFILLED'){
+                fullFunc(self.value);
+            }
+        })
     }
 
     fn(resolve);
