@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+        margin:0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+    <div style="background: #27368a;width:60%;max-height: 300px;overflow: auto" id="div1">
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+    </div>
+    <div style="position:absolute;height:300px;width:40px;background: #800040;top:0px;left:58%">
+        <div style="background: #d5c82b;height:30px;width:40px;transform: translateY(10)" id="indiv">
+
+        </div>
+    </div>
+    <script>
+        var div = document.querySelector('#div1'),
+            indiv = document.querySelector('#indiv');
+
+        div.addEventListener('scroll', function (param) {
+            var l = div.scrollTop/(div.scrollHeight-300) * 270;
+            indiv.style.transform = `translateY(${l}px)`
+        });
+    </script>
+</body>
+</html>
