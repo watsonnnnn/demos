@@ -6,3 +6,11 @@ j2j1.add = function(num1, num2) {
 j2j1.max = function() {
     return Math.max.apply(Math, [].slice.call(arguments));
 }
+
+var j2j2 = {};
+
+;(function (){
+    return {
+        a:999
+    }
+})()
