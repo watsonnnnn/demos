@@ -4,7 +4,6 @@
     var moduleCache = {};
   
     var require = function (deps, callback) {
-      debugger
       var params = [];
       var depCount = 0;
       var i, len, isEmpty = false, modName;
@@ -67,7 +66,7 @@
         /*
         这里重点说一下Module对象
         status代表模块状态
-        onLoad事实上对应requireJS的事件回调，该模块被引用多少次变化执行多少次回调，通知被依赖项解除依赖
+        onLoad事实上对应requireJS的事件回调，该模块被引用多少次就执行多少次回调，通知被依赖项解除依赖
         */
         mod = moduleCache[modName] = {
           modName: modName,
