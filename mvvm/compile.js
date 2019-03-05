@@ -30,11 +30,11 @@ class Compile {
     let attrs = node.attributes;
     Array.from(attrs).forEach((attr) => {
       if (this.isDirective(attr.name)) {
-        let v = attr.value;
+        let expr = attr.value;
         let type = attr.name.slice(2);
-        CompileUtil[type](node, this.vm, v);
+        CompileUtil[type](node, expr, this.vm);
       } else {
-
+        // do something
       }
     })
 
@@ -43,9 +43,9 @@ class Compile {
   compileText(node) {
     let expr = node.textContent;
     // console.log(text)
-    let reg = /\{\{[^}]+\}\}/g;
+    let reg = /\{\{[^}]+\}\}/;
     if (reg.test(expr)) {
-      CompileUtil['text'](node, this.vm, expr);
+      CompileUtil['text'](node, expr, this.vm);
     }
   }
 
@@ -69,26 +69,26 @@ CompileUtil = {
       return acc[cur]
     }, data)
   },
-  text(node, vm, expr) { //文本
+  text(node, expr, vm) { //文本
     let temp = expr;
     expr = expr.trim().replace(/\{\{([^}]+)\}\}/g, '$1') // 去\s
-
-    new Watcher(vm, expr);
-
+    new Watcher(vm, expr, (newValue)=>{
+      updateFn && updateFn(node, newValue);
+    });
     let updateFn = this.updater['textUpdate'];
-    updateFn && updateFn(node, this.getVal(vm.$data, expr), temp);
+    updateFn && updateFn(node, this.getVal(vm.$data, expr));
   },
-  model(node, vm, expr) { // 输入框
+  model(node, expr, vm ) { // 输入框
     let updateFn = this.updater['modelUpdate'];
     // 数据变化 应该调用watcher的cb
     // 值变化后调用cb 传递新值
     new Watcher(vm, expr, (newValue)=>{
-      updateFn && updateFn(node, this.getVal(vm.$data, expr));
+      updateFn && updateFn(node, newValue);
     })
     updateFn && updateFn(node, this.getVal(vm.$data, expr));
   },
   updater: {
-    textUpdate(node, value, expr) {
+    textUpdate(node, value) {
       node.textContent = value;
     },
     modelUpdate(node, value) {

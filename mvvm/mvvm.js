@@ -4,8 +4,8 @@ class MVVM{
     this.$data = options.data;
 
     if(this.$el){
-      new Compile(this.$el, this);
       new Observer(this.$data);
+      new Compile(this.$el, this);
     }
   }
 }

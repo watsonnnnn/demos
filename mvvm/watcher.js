@@ -3,7 +3,6 @@ class Watcher{ // 给需要变化的那个元素增加一个观察者 用新的�
     this.vm = vm;
     this.expr = expr;
     this.cb = cb;
-
     this.value = this.get(); // 获取老的值
   }
 
@@ -14,7 +13,10 @@ class Watcher{ // 给需要变化的那个元素增加一个观察者 用新的�
   }
 
   get(){
-    return this.getVal(this.vm, this.expr)
+    Dep.target = this;
+    const v = this.getVal(this.vm, this.expr);
+    Dep.target = null;
+    return v;
   }
 
   update(){
@@ -24,6 +26,4 @@ class Watcher{ // 给需要变化的那个元素增加一个观察者 用新的�
       this.cb(newValue);
     }
   }
-
-
 }
