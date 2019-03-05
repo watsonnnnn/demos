@@ -69,6 +69,16 @@ CompileUtil = {
       return acc[cur]
     }, data)
   },
+
+  setVal(data, expr, value) {
+    return expr.split('.').reduce((acc, cur, index, arr) => {
+      if(index == arr.length - 1){
+        acc[cur] = value;
+      }
+      return acc[cur]
+    }, data)
+  },
+
   text(node, expr, vm) { //文本
     let temp = expr;
     expr = expr.trim().replace(/\{\{([^}]+)\}\}/g, '$1') // 去\s
@@ -78,6 +88,7 @@ CompileUtil = {
     let updateFn = this.updater['textUpdate'];
     updateFn && updateFn(node, this.getVal(vm.$data, expr));
   },
+
   model(node, expr, vm ) { // 输入框
     let updateFn = this.updater['modelUpdate'];
     // 数据变化 应该调用watcher的cb
@@ -85,6 +96,12 @@ CompileUtil = {
     new Watcher(vm, expr, (newValue)=>{
       updateFn && updateFn(node, newValue);
     })
+
+    node.addEventListener('input', (e) => {
+      const value = e.target.value;
+      CompileUtil.setVal(vm.$data, expr, value);
+    })
+
     updateFn && updateFn(node, this.getVal(vm.$data, expr));
   },
   updater: {
