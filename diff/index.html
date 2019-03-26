@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+
+  </div>
+  <script src="./diff.js"></script>
+  <script src="./element.js"></script>
+  <script src="./patch.js"></script>
+  <script>
+    // import {
+    //   createElement,
+    //   render,
+    //   renderDom
+    // } from './element';
+    // import diff from './diff';
+    // import patch from './patch';
+    var root = document.querySelector('#app');
+    let virtualDom = createElement('ul', {
+      class: 'list'
+    }, [
+      createElement('li', {
+        class: 'item'
+      }, ['a']),
+      createElement('li', {
+        class: 'item'
+      }, ['b']),
+      createElement('li', {
+        class: 'item'
+      }, ['c'])
+    ]);
+
+    let virtualDom2 = createElement('ul', {
+      class: 'list-group'
+    });
+    let el = render(virtualDom);
+    renderDom(el, window.root);
+    let patches = diff(virtualDom, virtualDom2);
+    console.log(patches);
+
+    // 给元素打补丁，重新更新视图
+    patch(el, patches);
+  </script>
+</body>
+
+</html>

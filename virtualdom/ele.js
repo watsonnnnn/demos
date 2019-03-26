@@ -16,16 +16,13 @@ Element.prototype.render = function(){
         var cls = child instanceof Element?child.render():document.createTextNode(child);
         cle.appendChild(cls);
     });
-
     return cle;
-
 }
 
 Element.prototype.setAttr = function(name, value){
     if(typeof this != 'object') return;
     this.setAttribute(name, value);
 }
-
 
 // module.exports = function (tagName, attrs, children){
 //     return new Element(tagName, attrs, children);
