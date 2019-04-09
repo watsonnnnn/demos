@@ -14,6 +14,8 @@ class Koa{
 
   listen(...args){
     let server = http.createServer(this.handleRequest.bind(this));
-    server.listen(8088)
+    server.listen(...args)
   }
 }
+
+module.exports = Koa;
