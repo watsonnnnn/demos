@@ -15,12 +15,24 @@ class Koa{
     this.middleware = fn;
   }
   handleRequest(req, res){
-    console.log(req.url)
+    let ctx = this.createContext(req, res);
+    this.middleware(ctx);
+  }
+  createContext(req, res){
+    let ctx = this.context;
+    ctx.request = this.request;
+    ctx.request.req = ctx.req = req;
+
+    ctx.response = this.response;
+    ctx.response.res = ctx.res = res;
+
+    return ctx;
   }
 
   listen(...args){
     let server = http.createServer(this.handleRequest.bind(this));
-    server.listen(...args)
+    server.listen(...args);
+    console.log(`current server is running on port: ${args[0]}`)
   }
 }
 

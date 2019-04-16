@@ -1,3 +1,8 @@
-let response = {};
+let request = {
 
-module.exports = response;
+    get url(){
+        return this.req.url
+    }
+};
+
+module.exports = request;

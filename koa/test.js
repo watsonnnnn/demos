@@ -1,3 +1,9 @@
 let Koa = require('./koa');
 
-new Koa().listen(8888);
+let k = new Koa()
+
+k.use(async (ctx)=>{
+    console.log(ctx.req.url, ctx.request.req.url, ctx.url,ctx.request.url)
+})
+
+k.listen(8888);
