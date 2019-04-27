@@ -17,6 +17,14 @@ class Koa{
   handleRequest(req, res){
     let ctx = this.createContext(req, res);
     this.middleware(ctx);
+
+    res.statusCode = 404;
+    if(ctx.body){
+      res.statusCode = 200;
+      res.end(ctx.body);
+    }else{
+      res.end('Not Found')
+    }
   }
   createContext(req, res){
     let ctx = this.context;
