@@ -5,19 +5,33 @@ let context = require('./context');
 
 class Koa{
   constructor(){
-    this.middleware = null;
+    this.middlewares = [];
     this.request = Object.create(request);
     this.response = Object.create(response);
     this.context = Object.create(context);
   }
 
   use(fn){
-    this.middleware = fn;
+    this.middlewares.push(fn);
   }
-  handleRequest(req, res){
-    let ctx = this.createContext(req, res);
-    this.middleware(ctx);
 
+  compose(ctx, middlewares){
+    let i = -1;
+    const dispatch = async (index) => {
+      if(index <= i) return Promise.reject('multi call next()');
+      i = index;
+      if(index === middlewares.length) return;
+      let middleware = middlewares[index];
+      return middleware(ctx, ()=>{
+        dispatch(index + 1); // 不能是i++ 因为这个next方法可能被多次调用
+      })
+    }
+    return dispatch(0);
+  }
+
+  async handleRequest(req, res){
+    let ctx = this.createContext(req, res);
+    let p = await this.compose(ctx, this.middlewares);
     res.statusCode = 404;
     if(ctx.body){
       res.statusCode = 200;
