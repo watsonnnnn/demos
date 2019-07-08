@@ -6,7 +6,7 @@ function createApplication(params) {
         let md = req.method.toLowerCase();
         let {
             pathname
-        } = url.parse(path);
+        } = url.parse(req.path);
 
         // for(let i=0; i<app.routes.length; i++){
         //     let {method, path, handler} = app.routes[i];
@@ -18,7 +18,7 @@ function createApplication(params) {
         function next(err) {
 
             if (index == app.routes.length) {
-                return res.end(`cannot ${m} ${pathname}`);
+                return res.end(`cannot ${md} ${pathname}`);
             }
 
             let {
