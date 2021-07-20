@@ -13,6 +13,7 @@ class Koa{
 
   use(fn){
     this.middlewares.push(fn);
+    return this
   }
 
   compose(ctx, middlewares){
